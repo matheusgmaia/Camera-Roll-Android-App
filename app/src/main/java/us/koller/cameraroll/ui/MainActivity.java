@@ -33,6 +33,7 @@ import android.view.ViewTreeObserver;
 import android.view.WindowInsets;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,7 @@ import us.koller.cameraroll.adapter.main.NoFolderRecyclerViewAdapter;
 import us.koller.cameraroll.data.ContentObserver;
 import us.koller.cameraroll.styles.NestedRecyclerView;
 import us.koller.cameraroll.styles.Style;
+import us.koller.cameraroll.tensorFlowFilter.ImageClassifier;
 import us.koller.cameraroll.themes.Theme;
 import us.koller.cameraroll.adapter.SelectorModeManager;
 import us.koller.cameraroll.adapter.main.MainAdapter;
@@ -63,6 +65,9 @@ public class MainActivity extends ThemeableActivity {
     public static final String REFRESH_MEDIA = "REFRESH_MEDIA";
     public static final String PICK_PHOTOS = "PICK_PHOTOS";
     public static final String RESORT = "RESORT";
+
+    public static ImageClassifier classifier;
+
 
     public static final int PICK_PHOTOS_REQUEST_CODE = 6;
     public static final int REFRESH_PHOTOS_REQUEST_CODE = 7;
@@ -177,6 +182,15 @@ public class MainActivity extends ThemeableActivity {
                 actionBar.setTitle(getString(R.string.toolbar_title));
             }
         }
+
+
+        //TF
+        try {
+            classifier = new ImageClassifier(this);
+        } catch (IOException e) {
+            Log.e("TF", "Failed to initialize an image classifier.");
+        }
+
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setTag(ParallaxImageView.RECYCLER_VIEW_TAG);
@@ -772,6 +786,9 @@ public class MainActivity extends ThemeableActivity {
         if (mediaProvider != null) {
             mediaProvider.onDestroy();
         }
+
+
+        classifier.close();
 
         if (observer != null) {
             observer.unregister(this);

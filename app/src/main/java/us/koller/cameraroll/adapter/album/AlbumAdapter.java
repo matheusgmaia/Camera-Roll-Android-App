@@ -3,7 +3,9 @@ package us.koller.cameraroll.adapter.album;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +15,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.michaelflisar.dragselectrecyclerview.DragSelectTouchListener;
+
+import java.util.ArrayList;
 
 import us.koller.cameraroll.R;
 import us.koller.cameraroll.adapter.AbstractRecyclerViewAdapter;
@@ -30,7 +42,9 @@ import us.koller.cameraroll.data.models.Gif;
 import us.koller.cameraroll.data.models.Photo;
 import us.koller.cameraroll.data.models.RAWImage;
 import us.koller.cameraroll.data.models.Video;
+import us.koller.cameraroll.tensorFlowFilter.ImageClassifier;
 import us.koller.cameraroll.ui.ItemActivity;
+import us.koller.cameraroll.ui.MainActivity;
 
 public class AlbumAdapter extends AbstractRecyclerViewAdapter<Album> {
 
@@ -39,12 +53,18 @@ public class AlbumAdapter extends AbstractRecyclerViewAdapter<Album> {
     private final int VIEW_TYPE_GIF = 2;
     private final int VIEW_TYPE_VIDEO = 3;
     private final int VIEW_TYPE_RAW = 4;
+    private ArrayList<AlbumItem> mFilteredDataSet;
 
     private DragSelectTouchListener dragSelectTouchListener;
+    private RecyclerView recyclerView;
+    private Album album;
 
     public AlbumAdapter(SelectorModeManager.Callback callback, final RecyclerView recyclerView,
                         final Album album, boolean pick_photos) {
         super(pick_photos);
+        this.recyclerView = recyclerView;
+        this.album = album;
+        mFilteredDataSet = new ArrayList<AlbumItem>();
 
         setData(album);
         setSelectorModeManager(new SelectorModeManager());
@@ -77,7 +97,10 @@ public class AlbumAdapter extends AbstractRecyclerViewAdapter<Album> {
                     });
             recyclerView.addOnItemTouchListener(dragSelectTouchListener);
         }
+        //filterImages();
     }
+
+
 
     @Override
     public int getItemViewType(int position) {
@@ -117,13 +140,48 @@ public class AlbumAdapter extends AbstractRecyclerViewAdapter<Album> {
         return null;
     }
 
+    public void filterImages(Album album, Activity context){
+        if(album != null){
+            for (final AlbumItem albumItem: album.getAlbumItems()) {
+                Glide.with(context)
+                        .asBitmap()
+                        .load(albumItem.getPath())
+                        .apply(new RequestOptions().override(ImageClassifier.DIM_IMG_SIZE_Y, ImageClassifier.DIM_IMG_SIZE_X))
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
+                                String textToShow = "";
+                                ImageClassifier classifier = MainActivity.classifier;
+                                if(classifier != null){
+                                    Log.d("TFWWW", String.valueOf(bitmap.getWidth()));
+                                    Log.d("TFWWW", String.valueOf(bitmap.getHeight()));
+                                    textToShow = classifier.classifyFrame(bitmap);
+                                    Log.d("TF", textToShow);
+                                }
+                                if(!textToShow.contains("sunscreen")){
+                                    add(albumItem);
+                                }
+                            }
+                        });
+            }
+        }
+    }
+
+    public void add(AlbumItem albumItem){
+        mFilteredDataSet.add(albumItem);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
-        final AlbumItem albumItem = getData().getAlbumItems().get(position);
+        final AlbumItem albumItem = mFilteredDataSet.get(position);
 
         if (!albumItem.equals(((AlbumItemHolder) holder).getAlbumItem())) {
             ((AlbumItemHolder) holder).setAlbumItem(albumItem);
         }
+
+
+
 
         boolean selected = getSelectorManager().isItemSelected(albumItem.getPath());
 
@@ -263,6 +321,6 @@ public class AlbumAdapter extends AbstractRecyclerViewAdapter<Album> {
 
     @Override
     public int getItemCount() {
-        return getData() != null ? getData().getAlbumItems().size() : 0;
+        return getData() != null ? mFilteredDataSet.size() : 0;
     }
 }

@@ -384,6 +384,7 @@ public class AlbumActivity extends ThemeableActivity
         }
 
         recyclerViewAdapter.setData(album);
+        recyclerViewAdapter.filterImages(album, this);
 
         //restore Selector mode, when needed
         if (savedInstanceState != null) {
