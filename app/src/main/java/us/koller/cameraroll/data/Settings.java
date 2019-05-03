@@ -343,7 +343,7 @@ public class Settings {
         public static String getStyleName(Context context, int styleValue) {
             int valuesRes = R.array.style_values;
             int namesRes = R.array.style_names;
-            return getValueName(context, styleValue, valuesRes, namesRes);
+            return getValueName(context, 6, valuesRes, namesRes);
         }
 
 

@@ -13,6 +13,11 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    aaptOptions {
+        noCompress "tflite"
+        noCompress "lite"
+    }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -33,10 +38,7 @@ android {
         checkReleaseBuilds false
     }
 
-    aaptOptions {
-        noCompress "tflite"
-        noCompress "lite"
-    }
+
 
 
 }

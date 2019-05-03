@@ -32,6 +32,7 @@ import java.nio.channels.FileChannel;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -44,7 +45,7 @@ public class ImageClassifier {
   private static final String TAG = "TfLiteCameraDemo";
 
   /** Name of the model file stored in Assets. */
-  private static final String MODEL_PATH = "graph.lite";
+  private static final String MODEL_PATH = "mobilenetv2_160.tflite";
 
   /** Name of the label file stored in Assets. */
   private static final String LABEL_PATH = "labels.txt";
@@ -57,8 +58,8 @@ public class ImageClassifier {
 
   private static final int DIM_PIXEL_SIZE = 3;
 
-  public static final int DIM_IMG_SIZE_X = 224;
-  public static final int DIM_IMG_SIZE_Y = 224;
+  public static final int DIM_IMG_SIZE_X = 160;
+  public static final int DIM_IMG_SIZE_Y = 160;
 
   private static final int IMAGE_MEAN = 128;
   private static final float IMAGE_STD = 128.0f;
@@ -107,10 +108,10 @@ public class ImageClassifier {
   }
 
   /** Classifies a frame from the preview stream. */
-  public String classifyFrame(Bitmap bitmap) {
+  public synchronized HashMap<String, Float> classifyFrame(Bitmap bitmap) {
     if (tflite == null) {
       Log.e(TAG, "Image classifier has not been initialized; Skipped.");
-      return "Uninitialized Classifier.";
+      return null;
     }
     convertBitmapToByteBuffer(bitmap);
     // Here's where the magic happens!!!
@@ -123,9 +124,10 @@ public class ImageClassifier {
     applyFilter();
 
     // print the results
+    HashMap<String, Float> mapTopKLabels = mapTopKLabels();
     String textToShow = printTopKLabels();
-    textToShow = Long.toString(endTime - startTime) + "ms" + textToShow;
-    return textToShow;
+    Log.d("TF", String.valueOf(bitmap.getWidth()) + "  " + textToShow);
+    return mapTopKLabels;
   }
 
   void applyFilter(){
@@ -219,6 +221,21 @@ public class ImageClassifier {
       textToShow = String.format("\n%s: %4.2f",label.getKey(),label.getValue()) + textToShow;
     }
     return textToShow;
+  }
+
+  /** Prints top-K labels, to be shown in UI as the results. */
+  private HashMap<String, Float> mapTopKLabels() {
+    HashMap<String, Float> mapToReturn = new HashMap<String, Float>();
+    for (int i = 0; i < labelList.size(); ++i) {
+      sortedLabels.add(
+              new AbstractMap.SimpleEntry<>(labelList.get(i), labelProbArray[0][i]));
+    }
+    final int size = sortedLabels.size();
+    for (int i = 0; i < size; ++i) {
+      Map.Entry<String, Float> label = sortedLabels.poll();
+      mapToReturn.put(label.getKey(), label.getValue());
+    }
+    return mapToReturn;
   }
 
     public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {

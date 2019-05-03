@@ -32,7 +32,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import us.koller.cameraroll.R;
 import us.koller.cameraroll.data.Settings;
@@ -89,7 +91,17 @@ public class InfoRecyclerViewAdapter extends RecyclerView.Adapter {
                 Context context = callback.getContext();
 
                 Uri uri = albumItem.getUri(context);
-
+                String probs = "";
+                if(albumItem.getPredictionProbs() != null){
+                    HashMap<String, Float> probsMap = albumItem.getPredictionProbs();
+                    for (String key : probsMap.keySet()) {
+                        Float prob =  probsMap.get(key);
+                        String label = key.substring(0, key.indexOf("-"));
+                        probs = String.format("\n%s: %4.2f",label,prob) + probs;
+                    }
+                }
+                infoItems.add(new InfoUtil.InfoItem("Probabilities",probs)
+                        .setIconRes(R.drawable.ic_folder_white));
                 infoItems.add(new InfoUtil.InfoItem(context.getString(R.string.info_filename), albumItem.getName())
                         .setIconRes(R.drawable.ic_insert_drive_file_white));
                 infoItems.add(new InfoUtil.InfoItem(context.getString(R.string.info_filepath), albumItem.getPath())

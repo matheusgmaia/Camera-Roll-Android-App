@@ -62,6 +62,37 @@
     </item>
 
     <item
+        android:id="@+id/filter_by"
+        android:icon="@drawable/ic_sort_white"
+        android:title="@string/filter_by"
+        app:showAsAction="never">
+
+        <menu>
+            <group
+                android:id="@+id/filter_by_options"
+                android:checkableBehavior="all">
+
+                <item
+                    android:id="@+id/filter_by_pets"
+                    android:title="@string/pets" />
+
+                <item
+                    android:id="@+id/filter_by_selfies"
+                    android:title="@string/selfies" />
+                <item
+                    android:id="@+id/filter_by_group"
+                    android:title="@string/group" />
+                <item
+                    android:id="@+id/filter_by_sexy"
+                    android:title="@string/sexy" />
+                <item
+                    android:id="@+id/filter_by_diagrams"
+                    android:title="@string/diagram" />
+            </group>
+        </menu>
+    </item>
+
+    <item
         android:id="@+id/exclude"
         android:checkable="true"
         android:icon="@drawable/ic_visibility_off_white"

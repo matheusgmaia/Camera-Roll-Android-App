@@ -8,15 +8,21 @@
     <!--About Text-->
     <string name="about_text" translatable="false">
         <![CDATA[
-            © 2017 Lukas Koller, Munich, Germany<br/>
+            <br/> 2019 Matheus Gomes Maia, UFCG, Brazil <br/>
             <br/>
-            <b><a href=\"https://github.com/kollerlukas/Camera-Roll-Android-App\">Source Code</a></b> for this App<br/>
-            <b><a href=\"https://github.com/kollerlukas/Camera-Roll-Android-App/blob/master/PRIVACY.md\">Privacy Policy</a></b><br/>
+            <b><a href=\"https://github.com/matheusgmaia/Smart-Galley\">Source Code</a></b> for this App<br/>
+            <br/>
             <br/>
             <br/>
             <b>Licenses:</b><br/>
             <br/>
             Libraries:<br/>
+            <br>
+                <b><a href=\"https://github.com/kollerlukas/Camera-Roll-Android-App\">Camera Roll Android App</a></b><br/>
+                The base source code for this app. Thanks the creator and all contributors of this open source project.<br/>
+                <a href=\"https://github.com/kollerlukas/Camera-Roll-Android-App/blob/master/LICENSE\">LICENSE</a>
+            <br>
+
             <br>
                 <b><a href=\"https://github.com/bumptech/glide\">Glide</a></b><br/>
                 An image loading and caching library for Android focused on smooth scrolling.<br/>

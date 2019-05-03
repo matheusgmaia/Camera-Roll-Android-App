@@ -43,18 +43,19 @@
         </menu>
     </item>
 
-    <item
+<!--    <item
         android:id="@+id/hiddenFolders"
         android:checkable="true"
         android:icon="@drawable/ic_visibility_off_white"
         android:title="@string/hidden_folders"
         app:showAsAction="never" />
 
+
     <item
         android:id="@+id/file_explorer"
         android:icon="@drawable/ic_folder_white"
         android:title="@string/file_explorer"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
 
     <item
         android:id="@+id/settings"

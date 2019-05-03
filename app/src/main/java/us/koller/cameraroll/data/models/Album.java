@@ -134,4 +134,8 @@ public class Album
             return new Album[i];
         }
     };
+
+    public void setAlbumItems(ArrayList<AlbumItem> albumItems) {
+        this.albumItems = albumItems;
+    }
 }

@@ -12,8 +12,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import us.koller.cameraroll.data.Settings;
 import us.koller.cameraroll.util.InfoUtil;
@@ -36,10 +39,12 @@ public abstract class AlbumItem
     private long dateTaken;
     private int[] imageDimens;
     private List<String> tags;
+    private HashMap<String, Float> predictionProbs;
 
     public boolean error = false;
     public boolean isSharedElement = false;
     public boolean hasFadedIn = false;
+
 
     //factory method
     public static AlbumItem getInstance(String path) {
@@ -205,6 +210,8 @@ public abstract class AlbumItem
         this.path = parcel.readString();
         this.error = Boolean.parseBoolean(parcel.readString());
         this.uri = Uri.parse(parcel.readString());
+        this.predictionProbs = (HashMap<String, Float>) parcel.readSerializable();
+
     }
 
     @Override
@@ -234,6 +241,7 @@ public abstract class AlbumItem
         parcel.writeString(path);
         parcel.writeString(String.valueOf(error));
         parcel.writeString(String.valueOf(uri));
+        parcel.writeSerializable(this.predictionProbs);
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -276,5 +284,28 @@ public abstract class AlbumItem
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .error(Util.getErrorPlaceholder(context))
                 .signature(getGlideSignature());
+    }
+
+
+    public HashMap<String, Float> getPredictionProbs() {
+        return predictionProbs;
+    }
+
+    public void setPredictionProbs(HashMap<String, Float> predictionProbs) {
+        this.predictionProbs = predictionProbs;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AlbumItem albumItem = (AlbumItem) o;
+        return Objects.equals(path, albumItem.path);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(path);
     }
 }

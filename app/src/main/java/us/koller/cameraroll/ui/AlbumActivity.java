@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -44,13 +45,25 @@ import android.view.ViewTreeObserver;
 import android.view.WindowInsets;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.FutureTarget;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import us.koller.cameraroll.R;
 import us.koller.cameraroll.data.fileOperations.Move;
 import us.koller.cameraroll.data.models.VirtualAlbum;
+import us.koller.cameraroll.tensorFlowFilter.ImageClassifier;
 import us.koller.cameraroll.themes.Theme;
 import us.koller.cameraroll.adapter.SelectorModeManager;
 import us.koller.cameraroll.adapter.album.AlbumAdapter;
@@ -85,6 +98,7 @@ public class AlbumActivity extends ThemeableActivity
     public static final String RECYCLER_VIEW_SCROLL_STATE = "RECYCLER_VIEW_STATE";
 
     private int sharedElementReturnPosition = -1;
+    private Set<String> labelsToFiter = new HashSet<>();
 
     private final SharedElementCallback mCallback = new SharedElementCallback() {
         @Override
@@ -128,6 +142,8 @@ public class AlbumActivity extends ThemeableActivity
 
     private boolean pick_photos;
     private boolean allowMultiple;
+    private ExecutorService executorService;
+    private String path;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -357,7 +373,6 @@ public class AlbumActivity extends ThemeableActivity
         setSystemUiFlags();
 
         //load album
-        String path;
         if (savedInstanceState != null && savedInstanceState.containsKey(ALBUM_PATH)) {
             path = savedInstanceState.getString(ALBUM_PATH);
         } else {
@@ -383,8 +398,13 @@ public class AlbumActivity extends ThemeableActivity
             actionBar.setTitle(album.getName());
         }
 
-        recyclerViewAdapter.setData(album);
-        recyclerViewAdapter.filterImages(album, this);
+
+        if(!labelsToFiter.isEmpty()){
+            filterImages(album, recyclerViewAdapter, this);
+        }else{
+            recyclerViewAdapter.setData(album);
+            recyclerViewAdapter.setmFilteredDataSet(album.getAlbumItems());
+        }
 
         //restore Selector mode, when needed
         if (savedInstanceState != null) {
@@ -408,6 +428,84 @@ public class AlbumActivity extends ThemeableActivity
         if (!pick_photos && menu != null) {
             setupMenu();
         }
+    }
+
+    private void filterImages(Album album, final AlbumAdapter recyclerViewAdapter, final Activity context) {
+        executorService = Executors.newFixedThreadPool(1);
+        if (album == null) {
+            return;
+        }
+        for (final AlbumItem albumItem : album.getAlbumItems()) {
+            HashMap<String, Float> itemProbs = albumItem.getPredictionProbs();
+            if(itemProbs == null){
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        HashMap<String, Float> loadProbs = loadImageAndClassify(context, albumItem);
+                        albumItem.setPredictionProbs(loadProbs);
+                        showItem(albumItem, recyclerViewAdapter, loadProbs);
+                    }
+                });
+            }else{
+                showItem(albumItem, recyclerViewAdapter, itemProbs);
+            }
+        }
+    }
+
+    private void showItem(final AlbumItem albumItem, final AlbumAdapter recyclerViewAdapter, HashMap<String, Float> predictionProbs) {
+        if (predictionProbs == null){
+            return;
+        }
+        if(permissionToShow(predictionProbs)) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    // Stuff that updates the UI
+                    recyclerViewAdapter.add(albumItem);
+
+                }
+            });
+        }
+    }
+
+    private HashMap<String, Float> loadImageAndClassify(Activity context, AlbumItem albumItem) {
+        HashMap<String, Float> probs = null;
+        FutureTarget<Bitmap> futureTarget =
+                Glide.with(context)
+                        .asBitmap()
+                        .load(albumItem.getPath())
+                        .submit(ImageClassifier.DIM_IMG_SIZE_Y, ImageClassifier.DIM_IMG_SIZE_X);
+
+        try {
+            Bitmap bitmap = futureTarget.get();
+            ImageClassifier classifier = MainActivity.classifier;
+            if (classifier != null) {
+                probs = classifier.classifyFrame(classifier.getResizedBitmap(bitmap, ImageClassifier.DIM_IMG_SIZE_X, ImageClassifier.DIM_IMG_SIZE_Y));
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Glide.with(context).clear(futureTarget);
+        return probs;
+    }
+
+
+
+    private boolean permissionToShow(HashMap<String, Float> probs) {
+        boolean show = false;
+        for (String key : probs.keySet()) {
+            Float prob =  probs.get(key);
+            Float tresh = Float.parseFloat(key.substring(key.indexOf("-")+1));
+            String label = key.substring(0, key.indexOf("-"));
+            if(labelsToFiter.contains(label) && prob > tresh){
+                show =  true;
+                break;
+            }
+
+        }
+        return show;
     }
 
     private void setupMenu() {
@@ -568,6 +666,7 @@ public class AlbumActivity extends ThemeableActivity
 
                         final String newFilePath = intent.getStringExtra(Rename.NEW_FILE_PATH);
                         getIntent().putExtra(ALBUM_PATH, newFilePath);
+                        path = newFilePath;
 
                         boolean hiddenFolders = Settings.getInstance(activity).getHiddenFolders();
                         new MediaProvider(activity).loadAlbums(activity, hiddenFolders,
@@ -610,11 +709,71 @@ public class AlbumActivity extends ThemeableActivity
 
                 recyclerViewAdapter.notifyDataSetChanged();
                 break;
+            case R.id.filter_by_diagrams:
+                toggleLabel(item, "diagrams");
+                break;
+
+            case R.id.filter_by_group:
+                toggleLabel(item, "groups");
+                break;
+            case R.id.filter_by_pets:
+                toggleLabel(item, "pets");
+                break;
+            case R.id.filter_by_selfies:
+                toggleLabel(item, "selfies");
+                break;
+            case R.id.filter_by_sexy:
+                toggleLabel(item, "nsfw");
+                break;
+
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void toggleLabel(MenuItem item, String label) {
+        if(item.isChecked()){
+            item.setChecked(false);
+            labelsToFiter.remove(label);
+        }else{
+            item.setChecked(true);
+            labelsToFiter.add(label);
+        }
+
+        recyclerViewAdapter = new AlbumAdapter(this, recyclerView, album, pick_photos);
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+        final Activity activity = AlbumActivity.this;
+        boolean hiddenFolders = Settings.getInstance(activity).getHiddenFolders();
+
+        new MediaProvider(activity).loadAlbums(activity, hiddenFolders,
+                new MediaProvider.OnMediaLoadedCallback() {
+                    @Override
+                    public void onMediaLoaded(ArrayList<Album> albums) {
+                        //reload activity
+                        MediaProvider.loadAlbum(activity, path,
+                                new MediaProvider.OnAlbumLoadedCallback() {
+                                    @Override
+                                    public void onAlbumLoaded(Album album) {
+                                        AlbumActivity.this.album = album;
+                                        AlbumActivity.this.onAlbumLoaded(null);
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void timeout() {
+                        finish();
+                    }
+
+                    @Override
+                    public void needPermission() {
+                        finish();
+                    }
+                });
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1047,6 +1206,10 @@ public class AlbumActivity extends ThemeableActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(executorService != null){
+            executorService.shutdownNow();
+        }
+
 
         Provider.saveExcludedPaths(this);
         Provider.savePinnedPaths(this);

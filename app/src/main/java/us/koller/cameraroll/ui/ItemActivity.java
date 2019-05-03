@@ -271,6 +271,7 @@ public class ItemActivity extends ThemeableActivity {
                     });
         } else {
             album = getIntent().getExtras().getParcelable(ALBUM);
+            albumItem = getIntent().getExtras().getParcelable(ALBUM_ITEM);
             onAlbumLoaded(savedInstanceState);
         }
     }

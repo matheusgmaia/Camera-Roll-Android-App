@@ -280,7 +280,8 @@ public class MainActivity extends ThemeableActivity {
         });
 
         final FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setVisibility(View.GONE);
+        /*fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fabClicked(view);
@@ -304,7 +305,7 @@ public class MainActivity extends ThemeableActivity {
 
         if (pick_photos || !settings.getCameraShortcut()) {
             fab.setVisibility(View.GONE);
-        }
+        }*/
 
         //setting window insets manually
         final ViewGroup rootView = findViewById(R.id.root_view);
@@ -337,8 +338,8 @@ public class MainActivity extends ThemeableActivity {
                             recyclerView.getPaddingEnd() + insets.getSystemWindowInsetRight(),
                             recyclerView.getPaddingBottom() + insets.getSystemWindowInsetBottom());
 
-                    fab.setTranslationY(-insets.getSystemWindowInsetBottom());
-                    fab.setTranslationX(-insets.getSystemWindowInsetRight());
+                    //fab.setTranslationY(-insets.getSystemWindowInsetBottom());
+                    //fab.setTranslationX(-insets.getSystemWindowInsetRight());
 
                     return insets.consumeSystemWindowInsets();
                 }
@@ -376,8 +377,8 @@ public class MainActivity extends ThemeableActivity {
                                             recyclerView.getPaddingEnd() + windowInsets[2],
                                             recyclerView.getPaddingBottom() + windowInsets[3]);
 
-                                    fab.setTranslationX(-windowInsets[2]);
-                                    fab.setTranslationY(-windowInsets[3]);
+                                    //fab.setTranslationX(-windowInsets[2]);
+                                    //fab.setTranslationY(-windowInsets[3]);
                                 }
                             });
         }
@@ -561,7 +562,7 @@ public class MainActivity extends ThemeableActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.main, menu);
-        menu.findItem(R.id.hiddenFolders).setChecked(hiddenFolders);
+        //menu.findItem(R.id.hiddenFolders).setChecked(hiddenFolders);
 
         int sort_by = Settings.getInstance(this).sortAlbumsBy();
         if (sort_by == SortUtil.BY_NAME) {
@@ -582,7 +583,7 @@ public class MainActivity extends ThemeableActivity {
         cameraShortcut.setIcon(cameraIcon);*/
 
         if (pick_photos) {
-            menu.findItem(R.id.file_explorer).setVisible(false);
+//            menu.findItem(R.id.file_explorer).setVisible(false);
             menu.findItem(R.id.settings).setVisible(false);
             menu.findItem(R.id.about).setVisible(false);
         }
@@ -604,7 +605,7 @@ public class MainActivity extends ThemeableActivity {
             case R.id.refresh:
                 refreshPhotos();
                 break;
-            case R.id.hiddenFolders:
+/*            case R.id.hiddenFolders:
                 hiddenFolders = Settings.getInstance(this)
                         .setHiddenFolders(this, !hiddenFolders);
                 item.setChecked(hiddenFolders);
@@ -613,7 +614,7 @@ public class MainActivity extends ThemeableActivity {
             case R.id.file_explorer:
                 startActivity(new Intent(this, FileExplorerActivity.class),
                         ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle());
-                break;
+                break;*/
             case R.id.settings:
                 startActivityForResult(new Intent(this, SettingsActivity.class),
                         SETTINGS_REQUEST_CODE);

@@ -22,7 +22,7 @@
         <!--suppress AndroidElementNotAllowed -->
         <us.koller.cameraroll.preferences.StylePreference
             style="@style/CameraRoll.Theme.DialogPreference"
-            android:defaultValue="@integer/STYLE_PARALLAX_VALUE"
+            android:defaultValue="@integer/STYLE_CARDS_VALUE"
             android:key="@string/pref_key_style"
             android:title="@string/style" />
 
@@ -53,7 +53,7 @@
 
     <PreferenceCategory android:title="@string/other">
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="@string/pref_key_show_videos"
             android:summary="@string/show_videos_summary"
             android:title="@string/show_videos" />
