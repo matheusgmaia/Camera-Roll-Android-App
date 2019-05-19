@@ -44,7 +44,7 @@
                 android:fontFamily="@font/roboto_mono_medium"
                 android:textColor="@color/white_translucent1" />
 
-            <us.koller.cameraroll.ui.widget.ExoPlayerSeekbar
+            <us.matheusgmaia.smartgallery.ui.widget.ExoPlayerSeekbar
                 android:id="@id/exo_progress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

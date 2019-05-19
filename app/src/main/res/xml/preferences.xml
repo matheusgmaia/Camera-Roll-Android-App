@@ -20,14 +20,14 @@
             android:title="@string/theme" />
 
         <!--suppress AndroidElementNotAllowed -->
-        <us.koller.cameraroll.preferences.StylePreference
+        <us.matheusgmaia.smartgallery.preferences.StylePreference
             style="@style/CameraRoll.Theme.DialogPreference"
             android:defaultValue="@integer/STYLE_CARDS_VALUE"
             android:key="@string/pref_key_style"
             android:title="@string/style" />
 
         <!--suppress AndroidElementNotAllowed -->
-        <us.koller.cameraroll.preferences.ColumnCountPreference
+        <us.matheusgmaia.smartgallery.preferences.ColumnCountPreference
             style="@style/CameraRoll.Theme.DialogPreference"
             android:defaultValue="4"
             android:key="@string/pref_key_column_count"

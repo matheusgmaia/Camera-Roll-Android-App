@@ -19,7 +19,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <us.koller.cameraroll.ui.widget.FastScrollerRecyclerView
+        <us.matheusgmaia.smartgallery.ui.widget.FastScrollerRecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

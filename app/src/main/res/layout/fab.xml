@@ -8,4 +8,4 @@
     android:layout_margin="@dimen/fab_margin"
     app:backgroundTint="?attr/colorAccent"
     app:elevation="6dp"
-    app:layout_behavior="us.koller.cameraroll.ui.widget.FabSnackbarBehaviour" />
+    app:layout_behavior="us.matheusgmaia.smartgallery.ui.widget.FabSnackbarBehaviour" />

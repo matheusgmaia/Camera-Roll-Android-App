@@ -8,20 +8,22 @@
     <!--About Text-->
     <string name="about_text" translatable="false">
         <![CDATA[
-            <br/> 2019 Matheus Gomes Maia, UFCG, Brazil <br/>
+            <br/> Matheus Gomes Maia, UFCG, Brazil 2019 <br/>
             <br/>
             <b><a href=\"https://github.com/matheusgmaia/Smart-Galley\">Source Code</a></b> for this App<br/>
             <br/>
             <br/>
             <br/>
-            <b>Licenses:</b><br/>
-            <br/>
-            Libraries:<br/>
+            <h2><b>Licenses:</b></h2>
+            Base Code:<br/>
             <br>
                 <b><a href=\"https://github.com/kollerlukas/Camera-Roll-Android-App\">Camera Roll Android App</a></b><br/>
                 The base source code for this app. Thanks the creator and all contributors of this open source project.<br/>
                 <a href=\"https://github.com/kollerlukas/Camera-Roll-Android-App/blob/master/LICENSE\">LICENSE</a>
             <br>
+            <br/>
+            <br/>
+            Libraries:<br/>
 
             <br>
                 <b><a href=\"https://github.com/bumptech/glide\">Glide</a></b><br/>

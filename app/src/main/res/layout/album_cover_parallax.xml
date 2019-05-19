@@ -4,7 +4,7 @@
     android:layout_height="200dp"
     android:foreground="?selectableItemBackground">
 
-    <us.koller.cameraroll.ui.widget.ParallaxImageView
+    <us.matheusgmaia.smartgallery.ui.widget.ParallaxImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="200dp"

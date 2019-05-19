@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     buildToolsVersion '27.0.3'
     defaultConfig {
-        applicationId "us.koller.cameraroll"
+        applicationId "us.maia.smartgallery"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 36
@@ -23,13 +23,13 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            resValue "string", "app_name", "Camera Roll"
+            resValue "string", "app_name", "Smart Gallery"
         }
 
         debug {
             applicationIdSuffix ".debug"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            resValue "string", "app_name", "Camera Roll (debug)"
+            resValue "string", "app_name", "Smart Gallery (debug)"
         }
     }
 
