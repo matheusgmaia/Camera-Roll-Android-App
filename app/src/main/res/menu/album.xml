@@ -83,9 +83,6 @@
                     android:id="@+id/filter_by_group"
                     android:title="@string/group" />
                 <item
-                    android:id="@+id/filter_by_sexy"
-                    android:title="@string/sexy" />
-                <item
                     android:id="@+id/filter_by_diagrams"
                     android:title="@string/diagram" />
             </group>

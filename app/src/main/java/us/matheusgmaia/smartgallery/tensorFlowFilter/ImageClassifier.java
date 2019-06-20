@@ -45,10 +45,10 @@ public class ImageClassifier {
   private static final String TAG = "TfLiteCameraDemo";
 
   /** Name of the model file stored in Assets. */
-  private static final String MODEL_PATH = "mobilenetv2_160.tflite";
+  private static final String MODEL_PATH = "mobilenetv2.tflite";
 
   /** Name of the label file stored in Assets. */
-  private static final String LABEL_PATH = "labels.txt";
+  private static final String LABEL_PATH = "output_labels.txt";
 
   /** Number of results to show in the UI. */
   private static final int RESULTS_TO_SHOW = 3;
@@ -121,7 +121,7 @@ public class ImageClassifier {
     Log.d(TAG, "Timecost to run model inference: " + Long.toString(endTime - startTime));
 
     // smooth the results
-    applyFilter();
+    //applyFilter();
 
     // print the results
     HashMap<String, Float> mapTopKLabels = mapTopKLabels();

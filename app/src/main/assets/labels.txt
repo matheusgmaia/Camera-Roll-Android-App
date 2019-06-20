@@ -1,5 +1,0 @@
-diagrams-0.5
-groups-0.5
-nsfw-0.5
-pets-0.5
-selfies-0.5

@@ -3,6 +3,7 @@ package us.matheusgmaia.smartgallery.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.Context;
@@ -144,6 +145,7 @@ public class AlbumActivity extends ThemeableActivity
     private boolean allowMultiple;
     private ExecutorService executorService;
     private String path;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -175,7 +177,7 @@ public class AlbumActivity extends ThemeableActivity
             ((SwipeBackCoordinatorLayout) swipeBackView).setOnSwipeListener(this);
         }
 
-        final Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
         if (!pick_photos) {
@@ -400,7 +402,11 @@ public class AlbumActivity extends ThemeableActivity
 
 
         if(!labelsToFiter.isEmpty()){
+
+
             filterImages(album, recyclerViewAdapter, this);
+            toolbar.setTitle(album.getName());
+
         }else{
             recyclerViewAdapter.setData(album);
             recyclerViewAdapter.setmFilteredDataSet(album.getAlbumItems());
@@ -430,26 +436,38 @@ public class AlbumActivity extends ThemeableActivity
         }
     }
 
+    class Classify implements Runnable {
+        AlbumItem albumItem;
+        Activity context;
+        Classify(AlbumItem album, Activity activity) { albumItem= album; context=activity;}
+        public void run() {
+            HashMap<String, Float> loadProbs = loadImageAndClassify(context, albumItem);
+            albumItem.setPredictionProbs(loadProbs);
+            showItem(albumItem, recyclerViewAdapter, loadProbs);
+        }
+    }
+
     private void filterImages(Album album, final AlbumAdapter recyclerViewAdapter, final Activity context) {
         executorService = Executors.newFixedThreadPool(1);
+
         if (album == null) {
             return;
         }
-        for (final AlbumItem albumItem : album.getAlbumItems()) {
+
+        ArrayList<AlbumItem> albumItens = album.getAlbumItems();
+        for (AlbumItem albumItem : albumItens) {
+            if(albumItem.getName().contains("20190601-WA024")){
+                String oi = "oioioi";
+            }
             HashMap<String, Float> itemProbs = albumItem.getPredictionProbs();
             if(itemProbs == null){
-                executorService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        HashMap<String, Float> loadProbs = loadImageAndClassify(context, albumItem);
-                        albumItem.setPredictionProbs(loadProbs);
-                        showItem(albumItem, recyclerViewAdapter, loadProbs);
-                    }
-                });
+                executorService.execute(new Classify(albumItem, context));
             }else{
                 showItem(albumItem, recyclerViewAdapter, itemProbs);
             }
         }
+
+
     }
 
     private void showItem(final AlbumItem albumItem, final AlbumAdapter recyclerViewAdapter, HashMap<String, Float> predictionProbs) {
@@ -461,6 +479,13 @@ public class AlbumActivity extends ThemeableActivity
                 @Override
                 public void run() {
                     // Stuff that updates the UI
+                    String title = toolbar.getTitle().toString();
+                    if(title.endsWith("\\")){
+                        toolbar.setTitle(album.getName() + " Filtering /");
+                    }else{
+                        toolbar.setTitle(album.getName() + " Filtering \\");
+
+                    }
                     recyclerViewAdapter.add(albumItem);
 
                 }
@@ -722,10 +747,6 @@ public class AlbumActivity extends ThemeableActivity
             case R.id.filter_by_selfies:
                 toggleLabel(item, "selfies");
                 break;
-            case R.id.filter_by_sexy:
-                toggleLabel(item, "nsfw");
-                break;
-
             default:
                 break;
         }
@@ -738,6 +759,7 @@ public class AlbumActivity extends ThemeableActivity
             labelsToFiter.remove(label);
         }else{
             item.setChecked(true);
+            toolbar.setTitle(album.getName() + " Filtering...");
             labelsToFiter.add(label);
         }
 
