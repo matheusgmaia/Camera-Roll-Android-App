@@ -1,0 +1,302 @@
+python retrain.py \                                                                                                                                                                                1 ↵
+--bottleneck_dir=tf_files/bottlenecks \
+--image_dir /home/revai-server-3/MATHEUS-ESTUDO/BASES-DOWNLOAD/resized/PREPROCESS  \
+--testing_percentage=10 \
+--validation_percentage=10 \
+--train_batch_size=32 \
+--validation_batch_size=-1 \
+--eval_step_interval=100 \
+--how_many_training_steps=1000 \
+--random_scale=40 \
+--random_brightness=30 \
+--tfhub_module https://tfhub.dev/google/imagenet/mobilenet_v2_075_160/classification/3 \
+--output_graph=output_graph.pb \
+--output_labels=output_labels.txt \
+--intermediate_store_frequency=100 \
+--intermediate_output_graphs_dir tf_files/files/
+INFO:tensorflow:Looking for images in 'DIAGRAMS'
+I0609 22:19:26.573300 140149229455104 retrain.py:182] Looking for images in 'DIAGRAMS'
+INFO:tensorflow:Looking for images in 'GROUPS'
+I0609 22:19:26.721237 140149229455104 retrain.py:182] Looking for images in 'GROUPS'
+INFO:tensorflow:Looking for images in 'NEUTRAL'
+I0609 22:19:26.875755 140149229455104 retrain.py:182] Looking for images in 'NEUTRAL'
+INFO:tensorflow:Looking for images in 'PETS'
+I0609 22:19:27.111624 140149229455104 retrain.py:182] Looking for images in 'PETS'
+INFO:tensorflow:Looking for images in 'SELFIES'
+I0609 22:19:27.250419 140149229455104 retrain.py:182] Looking for images in 'SELFIES'
+WARNING:tensorflow:From /home/revai-server-3/MATHEUS-ESTUDO/BASES-DOWNLOAD/tensorflow-for-poets-2/envtcc2/lib/python3.5/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+W0609 22:19:32.507468 140149229455104 deprecation.py:323] From /home/revai-server-3/MATHEUS-ESTUDO/BASES-DOWNLOAD/tensorflow-for-poets-2/envtcc2/lib/python3.5/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+INFO:tensorflow:Saver not created because there are no variables in the graph to restore
+I0609 22:19:33.829290 140149229455104 saver.py:1483] Saver not created because there are no variables in the graph to restore
+WARNING:tensorflow:From /home/revai-server-3/MATHEUS-ESTUDO/BASES-DOWNLOAD/tensorflow-for-poets-2/envtcc2/lib/python3.5/site-packages/tensorflow/python/ops/losses/losses_impl.py:209: to_float (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.cast instead.
+W0609 22:19:33.993098 140149229455104 deprecation.py:323] From /home/revai-server-3/MATHEUS-ESTUDO/BASES-DOWNLOAD/tensorflow-for-poets-2/envtcc2/lib/python3.5/site-packages/tensorflow/python/ops/losses/losses_impl.py:209: to_float (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.cast instead.
+2019-06-09 22:19:34.029875: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2019-06-09 22:19:34.101376: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:998] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2019-06-09 22:19:34.101998: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x6314780 executing computations on platform CUDA. Devices:
+2019-06-09 22:19:34.102013: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): GeForce GTX 1080, Compute Capability 6.1
+2019-06-09 22:19:34.122546: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3192000000 Hz
+2019-06-09 22:19:34.123586: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x62cff90 executing computations on platform Host. Devices:
+2019-06-09 22:19:34.123607: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
+2019-06-09 22:19:34.123918: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1433] Found device 0 with properties: 
+name: GeForce GTX 1080 major: 6 minor: 1 memoryClockRate(GHz): 1.7715
+pciBusID: 0000:06:00.0
+totalMemory: 7.93GiB freeMemory: 7.23GiB
+2019-06-09 22:19:34.123933: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2019-06-09 22:19:34.124765: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-06-09 22:19:34.124776: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2019-06-09 22:19:34.124784: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2019-06-09 22:19:34.125003: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7030 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:06:00.0, compute capability: 6.1)
+2019-06-09 22:19:37.264956: I tensorflow/stream_executor/dso_loader.cc:152] successfully opened CUDA library libcublas.so.10.0 locally
+INFO:tensorflow:2019-06-09 22:19:37.597621: Step 0: Train accuracy = 96.9%
+I0609 22:19:37.597683 140149229455104 retrain.py:1104] 2019-06-09 22:19:37.597621: Step 0: Train accuracy = 96.9%
+INFO:tensorflow:2019-06-09 22:19:37.597884: Step 0: Cross entropy = 0.941698
+I0609 22:19:37.597917 140149229455104 retrain.py:1106] 2019-06-09 22:19:37.597884: Step 0: Cross entropy = 0.941698
+INFO:tensorflow:2019-06-09 22:20:15.892384: Step 0: Validation accuracy = 74.8% (N=5527)
+I0609 22:20:15.892442 140149229455104 retrain.py:1125] 2019-06-09 22:20:15.892384: Step 0: Validation accuracy = 74.8% (N=5527)
+INFO:tensorflow:2019-06-09 22:20:53.939406: Step 100: Train accuracy = 96.9%
+I0609 22:20:53.939557 140149229455104 retrain.py:1104] 2019-06-09 22:20:53.939406: Step 100: Train accuracy = 96.9%
+INFO:tensorflow:2019-06-09 22:20:53.939909: Step 100: Cross entropy = 0.144244
+I0609 22:20:53.939971 140149229455104 retrain.py:1106] 2019-06-09 22:20:53.939909: Step 100: Cross entropy = 0.144244
+INFO:tensorflow:2019-06-09 22:20:55.464152: Step 100: Validation accuracy = 94.4% (N=5527)
+I0609 22:20:55.464221 140149229455104 retrain.py:1125] 2019-06-09 22:20:55.464152: Step 100: Validation accuracy = 94.4% (N=5527)
+INFO:tensorflow:Save intermediate result to : tf_files/files/intermediate_100.pb
+I0609 22:20:55.895049 140149229455104 retrain.py:1138] Save intermediate result to : tf_files/files/intermediate_100.pb
+INFO:tensorflow:Saver not created because there are no variables in the graph to restore
+I0609 22:20:57.665566 140149229455104 saver.py:1483] Saver not created because there are no variables in the graph to restore
+2019-06-09 22:20:57.794432: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2019-06-09 22:20:57.794513: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-06-09 22:20:57.794519: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2019-06-09 22:20:57.794539: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2019-06-09 22:20:57.794665: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7030 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:06:00.0, compute capability: 6.1)
+WARNING:tensorflow:From /home/revai-server-3/MATHEUS-ESTUDO/BASES-DOWNLOAD/tensorflow-for-poets-2/envtcc2/lib/python3.5/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use standard file APIs to check for files with this prefix.
+W0609 22:20:58.043814 140149229455104 deprecation.py:323] From /home/revai-server-3/MATHEUS-ESTUDO/BASES-DOWNLOAD/tensorflow-for-poets-2/envtcc2/lib/python3.5/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use standard file APIs to check for files with this prefix.
+INFO:tensorflow:Restoring parameters from /tmp/_retrain_checkpoint
+I0609 22:20:58.044731 140149229455104 saver.py:1270] Restoring parameters from /tmp/_retrain_checkpoint
+WARNING:tensorflow:From retrain.py:907: convert_variables_to_constants (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.compat.v1.graph_util.convert_variables_to_constants
+W0609 22:20:58.437528 140149229455104 deprecation.py:323] From retrain.py:907: convert_variables_to_constants (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.compat.v1.graph_util.convert_variables_to_constants
+WARNING:tensorflow:From /home/revai-server-3/MATHEUS-ESTUDO/BASES-DOWNLOAD/tensorflow-for-poets-2/envtcc2/lib/python3.5/site-packages/tensorflow/python/framework/graph_util_impl.py:245: extract_sub_graph (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.compat.v1.graph_util.extract_sub_graph
+W0609 22:20:58.437759 140149229455104 deprecation.py:323] From /home/revai-server-3/MATHEUS-ESTUDO/BASES-DOWNLOAD/tensorflow-for-poets-2/envtcc2/lib/python3.5/site-packages/tensorflow/python/framework/graph_util_impl.py:245: extract_sub_graph (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.compat.v1.graph_util.extract_sub_graph
+INFO:tensorflow:Froze 264 variables.
+I0609 22:20:58.763604 140149229455104 graph_util_impl.py:268] Froze 264 variables.
+INFO:tensorflow:Converted 264 variables to const ops.
+I0609 22:20:58.793756 140149229455104 graph_util_impl.py:301] Converted 264 variables to const ops.
+INFO:tensorflow:2019-06-09 22:21:34.301296: Step 200: Train accuracy = 93.8%
+I0609 22:21:34.301386 140149229455104 retrain.py:1104] 2019-06-09 22:21:34.301296: Step 200: Train accuracy = 93.8%
+INFO:tensorflow:2019-06-09 22:21:34.301607: Step 200: Cross entropy = 0.195051
+I0609 22:21:34.301636 140149229455104 retrain.py:1106] 2019-06-09 22:21:34.301607: Step 200: Cross entropy = 0.195051
+INFO:tensorflow:2019-06-09 22:21:35.753417: Step 200: Validation accuracy = 94.2% (N=5527)
+I0609 22:21:35.753482 140149229455104 retrain.py:1125] 2019-06-09 22:21:35.753417: Step 200: Validation accuracy = 94.2% (N=5527)
+INFO:tensorflow:Save intermediate result to : tf_files/files/intermediate_200.pb
+I0609 22:21:36.023933 140149229455104 retrain.py:1138] Save intermediate result to : tf_files/files/intermediate_200.pb
+INFO:tensorflow:Saver not created because there are no variables in the graph to restore
+I0609 22:21:37.933466 140149229455104 saver.py:1483] Saver not created because there are no variables in the graph to restore
+2019-06-09 22:21:38.060445: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2019-06-09 22:21:38.060492: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-06-09 22:21:38.060516: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2019-06-09 22:21:38.060520: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2019-06-09 22:21:38.060724: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7030 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:06:00.0, compute capability: 6.1)
+INFO:tensorflow:Restoring parameters from /tmp/_retrain_checkpoint
+I0609 22:21:38.305427 140149229455104 saver.py:1270] Restoring parameters from /tmp/_retrain_checkpoint
+INFO:tensorflow:Froze 264 variables.
+I0609 22:21:38.990472 140149229455104 graph_util_impl.py:268] Froze 264 variables.
+INFO:tensorflow:Converted 264 variables to const ops.
+I0609 22:21:39.021983 140149229455104 graph_util_impl.py:301] Converted 264 variables to const ops.
+INFO:tensorflow:2019-06-09 22:22:14.180829: Step 300: Train accuracy = 100.0%
+I0609 22:22:14.181004 140149229455104 retrain.py:1104] 2019-06-09 22:22:14.180829: Step 300: Train accuracy = 100.0%
+INFO:tensorflow:2019-06-09 22:22:14.181429: Step 300: Cross entropy = 0.046921
+I0609 22:22:14.181493 140149229455104 retrain.py:1106] 2019-06-09 22:22:14.181429: Step 300: Cross entropy = 0.046921
+INFO:tensorflow:2019-06-09 22:22:15.686766: Step 300: Validation accuracy = 95.0% (N=5527)
+I0609 22:22:15.686820 140149229455104 retrain.py:1125] 2019-06-09 22:22:15.686766: Step 300: Validation accuracy = 95.0% (N=5527)
+INFO:tensorflow:Save intermediate result to : tf_files/files/intermediate_300.pb
+I0609 22:22:15.962014 140149229455104 retrain.py:1138] Save intermediate result to : tf_files/files/intermediate_300.pb
+INFO:tensorflow:Saver not created because there are no variables in the graph to restore
+I0609 22:22:17.823801 140149229455104 saver.py:1483] Saver not created because there are no variables in the graph to restore
+2019-06-09 22:22:17.955586: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2019-06-09 22:22:17.955625: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-06-09 22:22:17.955631: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2019-06-09 22:22:17.955636: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2019-06-09 22:22:17.955771: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7030 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:06:00.0, compute capability: 6.1)
+INFO:tensorflow:Restoring parameters from /tmp/_retrain_checkpoint
+I0609 22:22:18.207843 140149229455104 saver.py:1270] Restoring parameters from /tmp/_retrain_checkpoint
+INFO:tensorflow:Froze 264 variables.
+I0609 22:22:18.909148 140149229455104 graph_util_impl.py:268] Froze 264 variables.
+INFO:tensorflow:Converted 264 variables to const ops.
+I0609 22:22:18.940824 140149229455104 graph_util_impl.py:301] Converted 264 variables to const ops.
+INFO:tensorflow:2019-06-09 22:22:52.834680: Step 400: Train accuracy = 100.0%
+I0609 22:22:52.834857 140149229455104 retrain.py:1104] 2019-06-09 22:22:52.834680: Step 400: Train accuracy = 100.0%
+INFO:tensorflow:2019-06-09 22:22:52.835272: Step 400: Cross entropy = 0.062169
+I0609 22:22:52.835336 140149229455104 retrain.py:1106] 2019-06-09 22:22:52.835272: Step 400: Cross entropy = 0.062169
+INFO:tensorflow:2019-06-09 22:22:54.385903: Step 400: Validation accuracy = 95.2% (N=5527)
+I0609 22:22:54.385971 140149229455104 retrain.py:1125] 2019-06-09 22:22:54.385903: Step 400: Validation accuracy = 95.2% (N=5527)
+INFO:tensorflow:Save intermediate result to : tf_files/files/intermediate_400.pb
+I0609 22:22:54.662970 140149229455104 retrain.py:1138] Save intermediate result to : tf_files/files/intermediate_400.pb
+INFO:tensorflow:Saver not created because there are no variables in the graph to restore
+I0609 22:22:56.493275 140149229455104 saver.py:1483] Saver not created because there are no variables in the graph to restore
+2019-06-09 22:22:56.623939: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2019-06-09 22:22:56.624007: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-06-09 22:22:56.624031: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2019-06-09 22:22:56.624036: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2019-06-09 22:22:56.624184: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7030 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:06:00.0, compute capability: 6.1)
+INFO:tensorflow:Restoring parameters from /tmp/_retrain_checkpoint
+I0609 22:22:56.872468 140149229455104 saver.py:1270] Restoring parameters from /tmp/_retrain_checkpoint
+INFO:tensorflow:Froze 264 variables.
+I0609 22:22:57.575714 140149229455104 graph_util_impl.py:268] Froze 264 variables.
+INFO:tensorflow:Converted 264 variables to const ops.
+I0609 22:22:57.607087 140149229455104 graph_util_impl.py:301] Converted 264 variables to const ops.
+INFO:tensorflow:2019-06-09 22:23:25.156336: Step 500: Train accuracy = 100.0%
+I0609 22:23:25.156397 140149229455104 retrain.py:1104] 2019-06-09 22:23:25.156336: Step 500: Train accuracy = 100.0%
+INFO:tensorflow:2019-06-09 22:23:25.156526: Step 500: Cross entropy = 0.077076
+I0609 22:23:25.156543 140149229455104 retrain.py:1106] 2019-06-09 22:23:25.156526: Step 500: Cross entropy = 0.077076
+INFO:tensorflow:2019-06-09 22:23:26.714051: Step 500: Validation accuracy = 95.5% (N=5527)
+I0609 22:23:26.714106 140149229455104 retrain.py:1125] 2019-06-09 22:23:26.714051: Step 500: Validation accuracy = 95.5% (N=5527)
+INFO:tensorflow:Save intermediate result to : tf_files/files/intermediate_500.pb
+I0609 22:23:27.031168 140149229455104 retrain.py:1138] Save intermediate result to : tf_files/files/intermediate_500.pb
+INFO:tensorflow:Saver not created because there are no variables in the graph to restore
+I0609 22:23:28.971472 140149229455104 saver.py:1483] Saver not created because there are no variables in the graph to restore
+2019-06-09 22:23:29.099945: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2019-06-09 22:23:29.100010: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-06-09 22:23:29.100018: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2019-06-09 22:23:29.100025: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2019-06-09 22:23:29.100160: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7030 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:06:00.0, compute capability: 6.1)
+INFO:tensorflow:Restoring parameters from /tmp/_retrain_checkpoint
+I0609 22:23:29.350821 140149229455104 saver.py:1270] Restoring parameters from /tmp/_retrain_checkpoint
+INFO:tensorflow:Froze 264 variables.
+I0609 22:23:30.083321 140149229455104 graph_util_impl.py:268] Froze 264 variables.
+INFO:tensorflow:Converted 264 variables to const ops.
+I0609 22:23:30.114157 140149229455104 graph_util_impl.py:301] Converted 264 variables to const ops.
+INFO:tensorflow:2019-06-09 22:23:57.854538: Step 600: Train accuracy = 93.8%
+I0609 22:23:57.854602 140149229455104 retrain.py:1104] 2019-06-09 22:23:57.854538: Step 600: Train accuracy = 93.8%
+INFO:tensorflow:2019-06-09 22:23:57.854733: Step 600: Cross entropy = 0.280267
+I0609 22:23:57.854749 140149229455104 retrain.py:1106] 2019-06-09 22:23:57.854733: Step 600: Cross entropy = 0.280267
+INFO:tensorflow:2019-06-09 22:23:59.376197: Step 600: Validation accuracy = 95.6% (N=5527)
+I0609 22:23:59.376267 140149229455104 retrain.py:1125] 2019-06-09 22:23:59.376197: Step 600: Validation accuracy = 95.6% (N=5527)
+INFO:tensorflow:Save intermediate result to : tf_files/files/intermediate_600.pb
+I0609 22:23:59.649999 140149229455104 retrain.py:1138] Save intermediate result to : tf_files/files/intermediate_600.pb
+INFO:tensorflow:Saver not created because there are no variables in the graph to restore
+I0609 22:24:01.395956 140149229455104 saver.py:1483] Saver not created because there are no variables in the graph to restore
+2019-06-09 22:24:01.523365: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2019-06-09 22:24:01.523431: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-06-09 22:24:01.523453: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2019-06-09 22:24:01.523457: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2019-06-09 22:24:01.523636: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7030 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:06:00.0, compute capability: 6.1)
+INFO:tensorflow:Restoring parameters from /tmp/_retrain_checkpoint
+I0609 22:24:01.877868 140149229455104 saver.py:1270] Restoring parameters from /tmp/_retrain_checkpoint
+INFO:tensorflow:Froze 264 variables.
+I0609 22:24:02.661777 140149229455104 graph_util_impl.py:268] Froze 264 variables.
+INFO:tensorflow:Converted 264 variables to const ops.
+I0609 22:24:02.693658 140149229455104 graph_util_impl.py:301] Converted 264 variables to const ops.
+INFO:tensorflow:2019-06-09 22:24:31.000694: Step 700: Train accuracy = 96.9%
+I0609 22:24:31.000793 140149229455104 retrain.py:1104] 2019-06-09 22:24:31.000694: Step 700: Train accuracy = 96.9%
+INFO:tensorflow:2019-06-09 22:24:31.001022: Step 700: Cross entropy = 0.063980
+I0609 22:24:31.001057 140149229455104 retrain.py:1106] 2019-06-09 22:24:31.001022: Step 700: Cross entropy = 0.063980
+INFO:tensorflow:2019-06-09 22:24:32.525909: Step 700: Validation accuracy = 95.7% (N=5527)
+I0609 22:24:32.525977 140149229455104 retrain.py:1125] 2019-06-09 22:24:32.525909: Step 700: Validation accuracy = 95.7% (N=5527)
+INFO:tensorflow:Save intermediate result to : tf_files/files/intermediate_700.pb
+I0609 22:24:32.796156 140149229455104 retrain.py:1138] Save intermediate result to : tf_files/files/intermediate_700.pb
+INFO:tensorflow:Saver not created because there are no variables in the graph to restore
+I0609 22:24:34.512866 140149229455104 saver.py:1483] Saver not created because there are no variables in the graph to restore
+2019-06-09 22:24:34.639607: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2019-06-09 22:24:34.639672: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-06-09 22:24:34.639679: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2019-06-09 22:24:34.639699: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2019-06-09 22:24:34.639868: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7030 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:06:00.0, compute capability: 6.1)
+INFO:tensorflow:Restoring parameters from /tmp/_retrain_checkpoint
+I0609 22:24:34.979610 140149229455104 saver.py:1270] Restoring parameters from /tmp/_retrain_checkpoint
+INFO:tensorflow:Froze 264 variables.
+I0609 22:24:35.670011 140149229455104 graph_util_impl.py:268] Froze 264 variables.
+INFO:tensorflow:Converted 264 variables to const ops.
+I0609 22:24:35.700317 140149229455104 graph_util_impl.py:301] Converted 264 variables to const ops.
+INFO:tensorflow:2019-06-09 22:25:07.826967: Step 800: Train accuracy = 96.9%
+I0609 22:25:07.827139 140149229455104 retrain.py:1104] 2019-06-09 22:25:07.826967: Step 800: Train accuracy = 96.9%
+INFO:tensorflow:2019-06-09 22:25:07.827550: Step 800: Cross entropy = 0.160063
+I0609 22:25:07.827613 140149229455104 retrain.py:1106] 2019-06-09 22:25:07.827550: Step 800: Cross entropy = 0.160063
+INFO:tensorflow:2019-06-09 22:25:09.350125: Step 800: Validation accuracy = 95.6% (N=5527)
+I0609 22:25:09.350179 140149229455104 retrain.py:1125] 2019-06-09 22:25:09.350125: Step 800: Validation accuracy = 95.6% (N=5527)
+INFO:tensorflow:Save intermediate result to : tf_files/files/intermediate_800.pb
+I0609 22:25:09.618923 140149229455104 retrain.py:1138] Save intermediate result to : tf_files/files/intermediate_800.pb
+INFO:tensorflow:Saver not created because there are no variables in the graph to restore
+I0609 22:25:11.357373 140149229455104 saver.py:1483] Saver not created because there are no variables in the graph to restore
+2019-06-09 22:25:11.484604: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2019-06-09 22:25:11.484685: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-06-09 22:25:11.484692: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2019-06-09 22:25:11.484713: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2019-06-09 22:25:11.484860: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7030 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:06:00.0, compute capability: 6.1)
+INFO:tensorflow:Restoring parameters from /tmp/_retrain_checkpoint
+I0609 22:25:11.725876 140149229455104 saver.py:1270] Restoring parameters from /tmp/_retrain_checkpoint
+INFO:tensorflow:Froze 264 variables.
+I0609 22:25:12.423464 140149229455104 graph_util_impl.py:268] Froze 264 variables.
+INFO:tensorflow:Converted 264 variables to const ops.
+I0609 22:25:12.454425 140149229455104 graph_util_impl.py:301] Converted 264 variables to const ops.
+INFO:tensorflow:2019-06-09 22:25:44.756843: Step 900: Train accuracy = 93.8%
+I0609 22:25:44.756975 140149229455104 retrain.py:1104] 2019-06-09 22:25:44.756843: Step 900: Train accuracy = 93.8%
+INFO:tensorflow:2019-06-09 22:25:44.757288: Step 900: Cross entropy = 0.177659
+I0609 22:25:44.757335 140149229455104 retrain.py:1106] 2019-06-09 22:25:44.757288: Step 900: Cross entropy = 0.177659
+INFO:tensorflow:2019-06-09 22:25:46.293555: Step 900: Validation accuracy = 95.7% (N=5527)
+I0609 22:25:46.293623 140149229455104 retrain.py:1125] 2019-06-09 22:25:46.293555: Step 900: Validation accuracy = 95.7% (N=5527)
+INFO:tensorflow:Save intermediate result to : tf_files/files/intermediate_900.pb
+I0609 22:25:46.567019 140149229455104 retrain.py:1138] Save intermediate result to : tf_files/files/intermediate_900.pb
+INFO:tensorflow:Saver not created because there are no variables in the graph to restore
+I0609 22:25:48.535881 140149229455104 saver.py:1483] Saver not created because there are no variables in the graph to restore
+2019-06-09 22:25:48.665361: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2019-06-09 22:25:48.665426: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-06-09 22:25:48.665433: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2019-06-09 22:25:48.665454: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2019-06-09 22:25:48.665628: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7030 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:06:00.0, compute capability: 6.1)
+INFO:tensorflow:Restoring parameters from /tmp/_retrain_checkpoint
+I0609 22:25:48.913378 140149229455104 saver.py:1270] Restoring parameters from /tmp/_retrain_checkpoint
+INFO:tensorflow:Froze 264 variables.
+I0609 22:25:49.609813 140149229455104 graph_util_impl.py:268] Froze 264 variables.
+INFO:tensorflow:Converted 264 variables to const ops.
+I0609 22:25:49.640877 140149229455104 graph_util_impl.py:301] Converted 264 variables to const ops.
+INFO:tensorflow:2019-06-09 22:26:21.250990: Step 999: Train accuracy = 93.8%
+I0609 22:26:21.251096 140149229455104 retrain.py:1104] 2019-06-09 22:26:21.250990: Step 999: Train accuracy = 93.8%
+INFO:tensorflow:2019-06-09 22:26:21.251407: Step 999: Cross entropy = 0.134235
+I0609 22:26:21.251443 140149229455104 retrain.py:1106] 2019-06-09 22:26:21.251407: Step 999: Cross entropy = 0.134235
+INFO:tensorflow:2019-06-09 22:26:22.781117: Step 999: Validation accuracy = 95.9% (N=5527)
+I0609 22:26:22.781172 140149229455104 retrain.py:1125] 2019-06-09 22:26:22.781117: Step 999: Validation accuracy = 95.9% (N=5527)
+INFO:tensorflow:Saver not created because there are no variables in the graph to restore
+I0609 22:27:04.173428 140149229455104 saver.py:1483] Saver not created because there are no variables in the graph to restore
+2019-06-09 22:27:04.302140: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2019-06-09 22:27:04.302248: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-06-09 22:27:04.302257: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2019-06-09 22:27:04.302263: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2019-06-09 22:27:04.302461: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7030 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:06:00.0, compute capability: 6.1)
+INFO:tensorflow:Restoring parameters from /tmp/_retrain_checkpoint
+I0609 22:27:04.547001 140149229455104 saver.py:1270] Restoring parameters from /tmp/_retrain_checkpoint
+INFO:tensorflow:Final test accuracy = 96.4% (N=5601)
+I0609 22:27:05.357631 140149229455104 retrain.py:857] Final test accuracy = 96.4% (N=5601)
+INFO:tensorflow:Save final result to : output_graph.pb
+I0609 22:27:05.408237 140149229455104 retrain.py:1153] Save final result to : output_graph.pb
+INFO:tensorflow:Saver not created because there are no variables in the graph to restore
+I0609 22:27:07.242681 140149229455104 saver.py:1483] Saver not created because there are no variables in the graph to restore
+2019-06-09 22:27:07.374438: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2019-06-09 22:27:07.374478: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-06-09 22:27:07.374499: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2019-06-09 22:27:07.374520: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2019-06-09 22:27:07.374658: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7030 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:06:00.0, compute capability: 6.1)
+INFO:tensorflow:Restoring parameters from /tmp/_retrain_checkpoint
+I0609 22:27:07.621660 140149229455104 saver.py:1270] Restoring parameters from /tmp/_retrain_checkpoint
+INFO:tensorflow:Froze 264 variables.
+I0609 22:27:08.323671 140149229455104 graph_util_impl.py:268] Froze 264 variables.
+INFO:tensorflow:Converted 264 variables to const ops.
+I0609 22:27:08.349374 140149229455104 graph_util_impl.py:301] Converted 264 variables to const ops.
